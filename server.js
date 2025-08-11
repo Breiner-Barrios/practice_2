@@ -3,7 +3,7 @@ import express from 'express';
 const app = express();
 
 import { pool } from './db_connection.js';
-import { createApiViewIfNotExist, estudianteViewQuery } from './viewsSQL.js';
+import { createApiViewIfNotExist, estudianteViewQuery, historialViewQuery } from './viewsSQL.js';
 import setupRoutes from './routes.js';
 
 const PORT = 3000;
@@ -26,6 +26,8 @@ app.use(express.json());
 (async () => {
     try {
         await createApiViewIfNotExist('vista_estudiantes_api', estudianteViewQuery);
+        await createApiViewIfNotExist('historial_academico', historialViewQuery);
+
     } catch (error) {
         console.error('No se pudo iniciar la aplicación debido a un error de base de datos.');
         process.exit(1);

@@ -17,6 +17,21 @@ async function createApiViewIfNotExist(viewName, selectQuery) {
 
 // Definen la consulta SELECT para las VIEWS
 
+const historialViewQuery = `
+    SELECT CONCAT(e.primer_apellido, ' ', e.primer_apellido) AS estudiante,
+    c.nombre AS curso,
+    CONCAT(d.primer_apellido, ' ', d.primer_apellido) AS docente,
+    i.calificacion_final,
+    c.semestre
+    FROM inscripciones AS i
+    JOIN  estudiantes AS e ON i.id_estudiante = e.id_estudiante
+    JOIN cursos AS c ON i.id_curso = c.id_curso
+    JOIN docentes AS d ON c.id_docente = d.id_docente;
+    `
+;
+
+//
+
 const estudianteViewQuery = `
     SELECT
         id_estudiante AS id,
@@ -31,10 +46,12 @@ const estudianteViewQuery = `
         fecha_nacimiento,
         fecha_ingreso
     FROM estudiantes
-`;
+    `
+;
 
 // Exporta las consultas y la función para su uso en el archivo principal
 export {
     createApiViewIfNotExist,
-    estudianteViewQuery
+    estudianteViewQuery,
+    historialViewQuery
 };
